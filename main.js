@@ -218,6 +218,11 @@ L.control.layers({
     "Stops": overlays.marker,
 }).addTo(map);
 
+// Maßstab
+L.control.scale({
+    imperial: false,
+}).addTo(map);
+
 // loop über Etappen i=0 solange i kleiner der länge des Objekts wird i+1 gemacht bis es gleich ist dann hört die Schleife auf.
 for (let i=0; i<STOPS.length; i++) {
 
