@@ -204,17 +204,25 @@ const STOPS = [
 // Karte initialisieren
 let map = L.map('map');
 
-//Hintergrund definieren
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+// Overlays definieren
+let overlays= {
+    marker: L.featureGroup().addTo(map),
+};
+
+// Layercontrol
+L.control.layers({
+    "OpenStreetMap Mapnik": L.tileLayer.provider('OpenStreetMap.Mapnik').addTo(map),
+    "Esri Worldimagery": L.tileLayer.provider('Esri.WorldImagery'),
+    "Open TopoMap": L.tileLayer.provider('OpenTopoMap'),
+}, {
+    "Stops": overlays.marker,
 }).addTo(map);
 
 // loop über Etappen i=0 solange i kleiner der länge des Objekts wird i+1 gemacht bis es gleich ist dann hört die Schleife auf.
 for (let i=0; i<STOPS.length; i++) {
 
     // Marker zeichnen
-    let marker = L.marker([STOPS[i].lat, STOPS[i].lng]).addTo(map);
+    let marker = L.marker([STOPS[i].lat, STOPS[i].lng]).addTo(overlays.marker);
 
     // Popup definieren
     marker.bindPopup(`
